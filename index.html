@@ -904,10 +904,10 @@ function rotateSuggestions() {
 // ════════════════════════════════════════════════════════
 function saveChat() {
     const html = document.getElementById('messages').innerHTML;
-    if (!html.trim()) return;
+    // 🔥 HAPUS pengecekan !html.trim(), biarkan welcome card tetap tersimpan
     let all = JSON.parse(localStorage.getItem('bimo_all_chats') || '{}');
     all[currentChatId] = {
-        html,
+        html: html || '<div class="welcome-card" id="welcomeCard">...</div>', // fallback jika kosong
         timestamp: new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' })
     };
     const keys = Object.keys(all);
@@ -969,7 +969,6 @@ function deleteSingleChat(id) {
     delete all[id];
     localStorage.setItem('bimo_all_chats', JSON.stringify(all));
 
-    // Jika yang dihapus adalah chat aktif, buka chat terbaru atau welcome
     if (id === currentChatId) {
         const remaining = Object.keys(all);
         if (remaining.length > 0) {
@@ -977,7 +976,6 @@ function deleteSingleChat(id) {
             currentChatId = lastId;
             localStorage.setItem('bimo_last_id', lastId);
             document.getElementById('messages').innerHTML = all[lastId].html;
-            document.getElementById('messages').scrollTop = 99999;
         } else {
             currentChatId = Date.now().toString();
             localStorage.removeItem('bimo_last_id');
@@ -1005,10 +1003,12 @@ function newChat() {
     document.getElementById('messages').innerHTML = '';
     showWelcome();
     if (window.innerWidth <= 768) closeSidebar();
+    renderChatList(); // 🔥 TAMBAHKAN INI: refresh daftar riwayat
 }
 
 function showWelcome() {
     const container = document.getElementById('messages');
+    container.innerHTML = ''; // kosongkan dulu
     const wc = document.createElement('div');
     wc.className = 'welcome-card'; wc.id = 'welcomeCard';
     wc.innerHTML = `
@@ -1022,6 +1022,9 @@ function showWelcome() {
             <button class="quick-btn" onclick="askTopic('paspor hilang')">🚨 Paspor hilang</button>
         </div>`;
     container.appendChild(wc);
+    
+    // 🔥 TAMBAHKAN INI: simpan chat kosong ke localStorage
+    saveChat();
 }
 
 function clearAllHistory() {
