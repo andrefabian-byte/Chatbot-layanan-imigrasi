@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/7.0.0/fuse.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BIMO — Bot Informasi Imigrasi Bitung</title>
+    <title>BIRMO — Bot Informasi Imigrasi Bitung</title>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -392,7 +392,7 @@
         <div class="brand">
             <div class="brand-logo">🛂</div>
             <div>
-                <div class="brand-name">BIMO</div>
+                <div class="brand-name">BIRMO</div>
                 <div class="brand-sub">Bot Informasi · Imigrasi Bitung</div>
             </div>
         </div>
@@ -430,7 +430,7 @@
         <div class="sidebar-label">Layanan Utama</div>
         <button class="topic-btn" onclick="askTopic('syarat paspor baru')"><i class="fas fa-id-card"></i> Paspor Baru</button>
         <button class="topic-btn" onclick="askTopic('cara perpanjang paspor')"><i class="fas fa-sync"></i> Perpanjangan</button>
-        <button class="topic-btn" onclick="askTopic('biaya paspor')"><i class="fas fa-wallet"></i> Biaya</button>
+        <button class="topic-btn" onclick="askTopic('biaya paspor pnbp')"><i class="fas fa-wallet"></i> Biaya & PNBP</button>
         <button class="topic-btn" onclick="askTopic('paspor hilang')"><i class="fas fa-exclamation-triangle"></i> Paspor Hilang</button>
         <button class="topic-btn" onclick="askTopic('cara pakai mpaspor daftar online')"><i class="fas fa-mobile-alt"></i> M-Paspor</button>
         <button class="topic-btn" onclick="askTopic('syarat paspor anak bawah umur')"><i class="fas fa-child"></i> Paspor Anak</button>
@@ -471,21 +471,21 @@
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
-            <div class="input-hint">BIMO · Bot Informasi Imigrasi Bitung — Tersedia 24 Jam</div>
+            <div class="input-hint">BIRMO · Bot Informasi Imigrasi Bitung — Tersedia 24 Jam</div>
         </div>
     </div>
 </div>
 
 <script>
 // ════════════════════════════════════════════════════════
-//  DATABASE PENGETAHUAN BIMO
+//  DATABASE PENGETAHUAN BIRMO
 //  Setiap item: keywords (teks untuk Fuse.js) + answer
 // ════════════════════════════════════════════════════════
 const KB = [
   {
     id: 'salam',
     keywords: 'halo hai hello hi selamat pagi siang sore malam apa kabar perkenalan',
-    answer: `Halo! 👋 Selamat datang di <b>BIMO</b>, Bot Informasi Imigrasi Bitung.<br><br>
+    answer: `Halo! 👋 Selamat datang di <b>BIRMO</b>, Bot Informasi Imigrasi Bitung.<br><br>
 Saya siap membantu Anda dengan informasi seputar:<br>
 <ul>
   <li>🛂 Paspor baru &amp; perpanjangan</li>
@@ -575,7 +575,7 @@ Denda hilang <b>Rp 1.000.000</b> atau rusak <b>Rp 500.000</b>, ditambah biaya bu
   <li><b>Pilih layanan</b> (Baru/Penggantian) dan Kantor Imigrasi Bitung</li>
   <li><b>Upload foto dokumen</b> asli (KTP, KK, dll)</li>
   <li><b>Pilih jadwal</b> kedatangan ke kantor</li>
-  <li><b>Bayar</b> via bank/marketplace sebelum batas waktu</li>
+  <li><b>Bayar PNBP</b> via bank/marketplace sebelum batas waktu</li>
 </ol>
 <div class="highlight">📆 Kuota antrian biasanya dibuka setiap <b>Jumat sore</b> atau <b>Senin pagi</b> — segera ambil sebelum penuh.</div>`
   },
@@ -601,6 +601,7 @@ E-Paspor adalah paspor yang dilengkapi <b>chip RFID</b> yang menyimpan data biom
 <b>✅ Keunggulan E-Paspor:</b><br>
 <ul>
   <li>Bisa pakai <b>autogate</b> di bandara internasional — antrean lebih cepat</li>
+  <li>Mendapat fasilitas <b>Visa Waiver Jepang</b> (bebas visa ke Jepang)</li>
   <li>Keamanan data lebih tinggi dan sulit dipalsukan</li>
   <li>Proses imigrasi di luar negeri lebih mudah</li>
 </ul>
@@ -647,7 +648,7 @@ Jl. Samratulangi, Bitung Tengah, Kota Bitung, Sulawesi Utara<br><br>
     answer: `<b>⚡ Layanan Percepatan Paspor (1 Hari Jadi):</b><br><br>
 <ul>
   <li>Paspor selesai <b>di hari yang sama</b></li>
-  <li>Biaya tambahan: <b>+ Rp 1.000.000</b> (di luar biaya buku paspor)</li>
+  <li>Biaya tambahan: <b>+ Rp 1.000.000</b> (di luar biaya PNBP buku paspor)</li>
   <li>Pendaftaran maksimal pukul <b>10.00 pagi</b></li>
   <li>Pembayaran langsung di kasir kantor imigrasi</li>
 </ul>
@@ -724,7 +725,7 @@ const fuse = new Fuse(KB, {
 //  STATE & UTILS
 // ════════════════════════════════════════════════════════
 let isTyping = false;
-let currentChatId = localStorage.getItem('bimo_last_id') || Date.now().toString();
+let currentChatId = localStorage.getItem('birmo_last_id') || Date.now().toString();
 
 function getTime() {
     return new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
@@ -886,7 +887,7 @@ function askTopic(q) { sendMessage(q); }
 // ════════════════════════════════════════════════════════
 const SUGS = [
     ['⏱️ Lama proses?', '👶 Paspor anak?', '⚡ Layanan percepatan?', '📍 Lokasi kantor?'],
-    ['🌐 Beda kantor bisa?', '🔒 Paspor mau habis?', '📱 Download M-Paspor', '💳 Cara bayar?'],
+    ['🌐 Beda kantor bisa?', '🔒 Paspor mau habis?', '📱 Download M-Paspor', '💳 Cara bayar PNBP?'],
     ['🚨 Lapor hilang ke mana?', '🕌 Paspor untuk umroh?', '🌍 Visa WNA?', '🔄 Paspor rusak?'],
     ['📋 Syarat lengkap?', '📆 Kuota kapan buka?', '⚡ Paspor 1 hari jadi?', '🏢 Jam kantor?'],
 ];
@@ -904,68 +905,57 @@ function rotateSuggestions() {
 // ════════════════════════════════════════════════════════
 function saveChat() {
     const html = document.getElementById('messages').innerHTML;
-    // 🔥 HAPUS pengecekan !html.trim(), biarkan welcome card tetap tersimpan
+    if (!html.trim() || html.includes('welcome-card')) return; // Jangan simpan jika kosong/hanya welcome card
+
     let all = JSON.parse(localStorage.getItem('bimo_all_chats') || '{}');
     all[currentChatId] = {
-        html: html || '<div class="welcome-card" id="welcomeCard">...</div>', // fallback jika kosong
-        timestamp: new Date().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' })
+        html,
+        timestamp: new Date().toLocaleString('id-ID', { 
+            day: '2-digit', 
+            month: 'short', 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        })
     };
-    const keys = Object.keys(all);
-    if (keys.length > 10) delete all[keys[0]];
+
     localStorage.setItem('bimo_all_chats', JSON.stringify(all));
     localStorage.setItem('bimo_last_id', currentChatId);
-    renderChatList();
+    
+    renderChatList(); // PENTING: Update sidebar setiap kali ada pesan baru
 }
 
 function renderChatList() {
-    let all = JSON.parse(localStorage.getItem('bimo_all_chats') || '{}');
     const list = document.getElementById('chatHistoryList');
     if (!list) return;
-    
+
+    // Ambil data dari local storage
+    let all = JSON.parse(localStorage.getItem('bimo_all_chats') || '{}');
     list.innerHTML = '';
-    const ids = Object.keys(all).reverse(); // urutan terbaru di atas
+
+    const ids = Object.keys(all).reverse(); // Riwayat terbaru di atas
     
     if (ids.length === 0) {
-        list.innerHTML = '<div style="font-size:11px;color:rgba(255,255,255,0.25);padding:8px 16px;">Belum ada riwayat</div>';
+        list.innerHTML = '<div style="font-size:11px;color:rgba(255,255,255,0.25);padding:12px 16px;">Belum ada riwayat</div>';
         return;
     }
-    
-    for (let id of ids) {
-        const item = all[id];
-        const div = document.createElement('div');
-        div.style.cssText = 'display:flex;align-items:center;width:90%;margin:2px 5%;';
+
+    ids.forEach(id => {
+        const item = document.createElement('div');
+        item.className = 'history-item';
         
-        const btn = document.createElement('button');
-        btn.className = 'topic-btn';
-        btn.style.cssText = 'width:auto;flex:1;margin:0;font-size:11px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
-        btn.style.opacity = id === currentChatId ? '1' : '0.65';
-        btn.innerHTML = `<i class="fas fa-comment-alt"></i> ${item.timestamp}`;
-        btn.onclick = (function(chatId) {
-            return function() {
-                currentChatId = chatId;
-                document.getElementById('messages').innerHTML = all[chatId].html;
-                document.getElementById('messages').scrollTop = 99999;
-                localStorage.setItem('bimo_last_id', chatId);
-                renderChatList();
-                if (window.innerWidth <= 768) closeSidebar();
-            };
-        })(id);
-        
-        const delBtn = document.createElement('button');
-        delBtn.className = 'del-chat-btn';
-        delBtn.title = 'Hapus chat ini';
-        delBtn.innerHTML = '<i class="fas fa-times"></i>';
-        delBtn.onclick = (function(chatId) {
-            return function(e) {
-                e.stopPropagation();
-                deleteSingleChat(chatId);
-            };
-        })(id);
-        
-        div.appendChild(btn);
-        div.appendChild(delBtn);
-        list.appendChild(div);
-    }
+        // Cek apakah ini chat yang sedang dibuka untuk memberi efek highlight
+        const activeStyle = (id === currentChatId) ? 'opacity: 1; background: rgba(184,137,42,0.1);' : 'opacity: 0.6;';
+
+        item.innerHTML = `
+            <button class="topic-btn" style="${activeStyle} flex: 1; margin: 0;" onclick="loadSpecificChat('${id}')">
+                <i class="fas fa-comment-alt"></i> ${all[id].timestamp}
+            </button>
+            <button class="del-chat-btn" onclick="deleteSingleChat('${id}')">
+                <i class="fas fa-times"></i>
+            </button>
+        `;
+        list.appendChild(item);
+    });
 }
 
 function deleteSingleChat(id) {
@@ -973,26 +963,23 @@ function deleteSingleChat(id) {
     delete all[id];
     localStorage.setItem('bimo_all_chats', JSON.stringify(all));
 
+    // Jika yang dihapus adalah chat yang sedang dibuka, buat chat baru
     if (id === currentChatId) {
-        const remaining = Object.keys(all);
-        if (remaining.length > 0) {
-            const lastId = remaining[remaining.length - 1];
-            currentChatId = lastId;
-            localStorage.setItem('bimo_last_id', lastId);
-            document.getElementById('messages').innerHTML = all[lastId].html;
-        } else {
-            currentChatId = Date.now().toString();
-            localStorage.removeItem('bimo_last_id');
-            document.getElementById('messages').innerHTML = '';
-            showWelcome();
-        }
+        newChat();
+    } else {
+        renderChatList();
     }
-    renderChatList();
+}
+
+function clearAllHistory() {
+    if (!confirm('Hapus semua riwayat chat?')) return;
+    localStorage.clear(); // Bersihkan semua
+    newChat();
 }
 
 function loadLastChat() {
-    const lastId = localStorage.getItem('bimo_last_id');
-    const all = JSON.parse(localStorage.getItem('bimo_all_chats') || '{}');
+    const lastId = localStorage.getItem('birmo_last_id');
+    const all = JSON.parse(localStorage.getItem('birmo_all_chats') || '{}');
     if (lastId && all[lastId]) {
         currentChatId = lastId;
         document.getElementById('messages').innerHTML = all[lastId].html;
@@ -1003,48 +990,69 @@ function loadLastChat() {
 }
 
 function newChat() {
+    // Berikan ID unik baru agar tidak menimpa chat lama
     currentChatId = Date.now().toString();
+    localStorage.setItem('bimo_last_id', currentChatId);
+    
+    // Bersihkan layar chat
     document.getElementById('messages').innerHTML = '';
-    showWelcome();
+    
+    showWelcome();      // Tampilkan kartu sambutan
+    renderChatList();   // WAJIB: Agar riwayat chat sebelumnya muncul di kiri
+    
     if (window.innerWidth <= 768) closeSidebar();
-    renderChatList(); // 🔥 TAMBAHKAN INI: refresh daftar riwayat
 }
-
 function showWelcome() {
     const container = document.getElementById('messages');
-    container.innerHTML = ''; // kosongkan dulu
     const wc = document.createElement('div');
     wc.className = 'welcome-card'; wc.id = 'welcomeCard';
     wc.innerHTML = `
         <div style="font-size:40px;margin-bottom:10px;">🛂</div>
-        <h2>Halo! Saya BIMO</h2>
+        <h2>Halo! Saya BIRMO</h2>
         <p>Bot Informasi Imigrasi Bitung siap membantu Anda 24 jam seputar paspor, visa, dan layanan keimigrasian.</p>
         <div class="quick-grid">
             <button class="quick-btn" onclick="askTopic('syarat paspor baru')">🛂 Syarat paspor baru</button>
-            <button class="quick-btn" onclick="askTopic('biaya paspor')">💳 Biaya paspor</button>
+            <button class="quick-btn" onclick="askTopic('biaya paspor pnbp')">💳 Biaya paspor</button>
             <button class="quick-btn" onclick="askTopic('cara pakai mpaspor daftar online')">📱 Cara pakai M-Paspor</button>
             <button class="quick-btn" onclick="askTopic('paspor hilang')">🚨 Paspor hilang</button>
         </div>`;
     container.appendChild(wc);
-    
-    // 🔥 TAMBAHKAN INI: simpan chat kosong ke localStorage
-    saveChat();
 }
 
 function clearAllHistory() {
     if (!confirm('Hapus semua riwayat chat?')) return;
-    localStorage.removeItem('bimo_all_chats');
-    localStorage.removeItem('bimo_last_id');
+    localStorage.removeItem('birmo_all_chats');
+    localStorage.removeItem('birmo_last_id');
     currentChatId = Date.now().toString();
     document.getElementById('messages').innerHTML = '';
     renderChatList();
     showWelcome();
 }
 
+function loadSpecificChat(id) {
+    let all = JSON.parse(localStorage.getItem('bimo_all_chats') || '{}');
+    if (all[id]) {
+        currentChatId = id;
+        localStorage.setItem('bimo_last_id', id);
+        document.getElementById('messages').innerHTML = all[id].html;
+        renderChatList(); // Update highlight di sidebar
+        if (window.innerWidth <= 768) closeSidebar();
+    }
+}
+
 // ── START ──
 window.addEventListener('load', () => {
-    renderChatList();
-    loadLastChat();
+    const lastId = localStorage.getItem('bimo_last_id');
+    const all = JSON.parse(localStorage.getItem('bimo_all_chats') || '{}');
+
+    if (lastId && all[lastId]) {
+        currentChatId = lastId;
+        document.getElementById('messages').innerHTML = all[lastId].html;
+    } else {
+        newChat(); // Jika kosong, buat sesi baru
+    }
+    
+    renderChatList(); // Tampilkan riwayat di sidebar
 });
 </script>
 </body>
