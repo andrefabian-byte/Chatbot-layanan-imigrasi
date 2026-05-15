@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/7.0.0/fuse.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BIRMO — Bot Informasi Imigrasi Bitung</title>
+    <title>BIMO — Bot Informasi Imigrasi Bitung</title>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -392,7 +392,7 @@
         <div class="brand">
             <div class="brand-logo">🛂</div>
             <div>
-                <div class="brand-name">BIRMO</div>
+                <div class="brand-name">BIMO</div>
                 <div class="brand-sub">Bot Informasi · Imigrasi Bitung</div>
             </div>
         </div>
@@ -471,21 +471,21 @@
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>
-            <div class="input-hint">BIRMO · Bot Informasi Imigrasi Bitung — Tersedia 24 Jam</div>
+            <div class="input-hint">BIMO · Bot Informasi Imigrasi Bitung — Tersedia 24 Jam</div>
         </div>
     </div>
 </div>
 
 <script>
 // ════════════════════════════════════════════════════════
-//  DATABASE PENGETAHUAN BIRMO
+//  DATABASE PENGETAHUAN BIMO
 //  Setiap item: keywords (teks untuk Fuse.js) + answer
 // ════════════════════════════════════════════════════════
 const KB = [
   {
     id: 'salam',
     keywords: 'halo hai hello hi selamat pagi siang sore malam apa kabar perkenalan',
-    answer: `Halo! 👋 Selamat datang di <b>BIRMO</b>, Bot Informasi Imigrasi Bitung.<br><br>
+    answer: `Halo! 👋 Selamat datang di <b>BIMO</b>, Bot Informasi Imigrasi Bitung.<br><br>
 Saya siap membantu Anda dengan informasi seputar:<br>
 <ul>
   <li>🛂 Paspor baru &amp; perpanjangan</li>
@@ -725,7 +725,7 @@ const fuse = new Fuse(KB, {
 //  STATE & UTILS
 // ════════════════════════════════════════════════════════
 let isTyping = false;
-let currentChatId = localStorage.getItem('birmo_last_id') || Date.now().toString();
+let currentChatId = localStorage.getItem('bimo_last_id') || Date.now().toString();
 
 function getTime() {
     return new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
@@ -978,8 +978,8 @@ function clearAllHistory() {
 }
 
 function loadLastChat() {
-    const lastId = localStorage.getItem('birmo_last_id');
-    const all = JSON.parse(localStorage.getItem('birmo_all_chats') || '{}');
+    const lastId = localStorage.getItem('bimo_last_id');
+    const all = JSON.parse(localStorage.getItem('bimo_all_chats') || '{}');
     if (lastId && all[lastId]) {
         currentChatId = lastId;
         document.getElementById('messages').innerHTML = all[lastId].html;
@@ -1008,7 +1008,7 @@ function showWelcome() {
     wc.className = 'welcome-card'; wc.id = 'welcomeCard';
     wc.innerHTML = `
         <div style="font-size:40px;margin-bottom:10px;">🛂</div>
-        <h2>Halo! Saya BIRMO</h2>
+        <h2>Halo! Saya BIMO</h2>
         <p>Bot Informasi Imigrasi Bitung siap membantu Anda 24 jam seputar paspor, visa, dan layanan keimigrasian.</p>
         <div class="quick-grid">
             <button class="quick-btn" onclick="askTopic('syarat paspor baru')">🛂 Syarat paspor baru</button>
@@ -1021,8 +1021,8 @@ function showWelcome() {
 
 function clearAllHistory() {
     if (!confirm('Hapus semua riwayat chat?')) return;
-    localStorage.removeItem('birmo_all_chats');
-    localStorage.removeItem('birmo_last_id');
+    localStorage.removeItem('bimo_all_chats');
+    localStorage.removeItem('bimo_last_id');
     currentChatId = Date.now().toString();
     document.getElementById('messages').innerHTML = '';
     renderChatList();
