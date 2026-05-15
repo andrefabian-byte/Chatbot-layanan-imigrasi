@@ -921,47 +921,51 @@ function renderChatList() {
     let all = JSON.parse(localStorage.getItem('bimo_all_chats') || '{}');
     const list = document.getElementById('chatHistoryList');
     if (!list) return;
+    
     list.innerHTML = '';
-
-    const ids = Object.keys(all).reverse();
+    const ids = Object.keys(all).reverse(); // urutan terbaru di atas
+    
     if (ids.length === 0) {
         list.innerHTML = '<div style="font-size:11px;color:rgba(255,255,255,0.25);padding:8px 16px;">Belum ada riwayat</div>';
         return;
     }
-
-    ids.forEach(id => {
-        const wrap = document.createElement('div');
-        wrap.className = 'history-item';
-
+    
+    for (let id of ids) {
+        const item = all[id];
+        const div = document.createElement('div');
+        div.style.cssText = 'display:flex;align-items:center;width:90%;margin:2px 5%;';
+        
         const btn = document.createElement('button');
         btn.className = 'topic-btn';
-        btn.style.fontSize = '11px';
+        btn.style.cssText = 'width:auto;flex:1;margin:0;font-size:11px;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
         btn.style.opacity = id === currentChatId ? '1' : '0.65';
-        btn.style.margin = '0';
-        btn.innerHTML = `<i class="fas fa-comment-alt"></i> ${all[id].timestamp}`;
-        btn.onclick = () => {
-            currentChatId = id;
-            document.getElementById('messages').innerHTML = all[id].html;
-            document.getElementById('messages').scrollTop = 99999;
-            localStorage.setItem('bimo_last_id', id);
-            renderChatList();
-            if (window.innerWidth <= 768) closeSidebar();
-        };
-
-        // Tombol hapus per chat
+        btn.innerHTML = `<i class="fas fa-comment-alt"></i> ${item.timestamp}`;
+        btn.onclick = (function(chatId) {
+            return function() {
+                currentChatId = chatId;
+                document.getElementById('messages').innerHTML = all[chatId].html;
+                document.getElementById('messages').scrollTop = 99999;
+                localStorage.setItem('bimo_last_id', chatId);
+                renderChatList();
+                if (window.innerWidth <= 768) closeSidebar();
+            };
+        })(id);
+        
         const delBtn = document.createElement('button');
         delBtn.className = 'del-chat-btn';
         delBtn.title = 'Hapus chat ini';
         delBtn.innerHTML = '<i class="fas fa-times"></i>';
-        delBtn.onclick = (e) => {
-            e.stopPropagation();
-            deleteSingleChat(id);
-        };
-
-        wrap.appendChild(btn);
-        wrap.appendChild(delBtn);
-        list.appendChild(wrap);
-    });
+        delBtn.onclick = (function(chatId) {
+            return function(e) {
+                e.stopPropagation();
+                deleteSingleChat(chatId);
+            };
+        })(id);
+        
+        div.appendChild(btn);
+        div.appendChild(delBtn);
+        list.appendChild(div);
+    }
 }
 
 function deleteSingleChat(id) {
